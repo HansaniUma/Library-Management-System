@@ -1,8 +1,25 @@
 import {Entity, hasOne, model, property} from '@loopback/repository';
 import {Book} from "./book.model";
 import {Member} from "./member.model";
+import {settings} from "cluster";
 
-@model()
+@model({settings: {
+  foreignKeys: {
+    memId: {
+          name: 'memId',
+          entity: 'Member',
+          entityKey: 'id',
+          foreignKey: 'memId',
+    },
+    bookId:{
+          name: 'booId',
+          entity: 'Book',
+          entityKey: 'id',
+          foreignKey: 'memId'
+    },
+  },
+},
+})
 export class BorrowDt extends Entity {
   @property({
     type: 'number',
